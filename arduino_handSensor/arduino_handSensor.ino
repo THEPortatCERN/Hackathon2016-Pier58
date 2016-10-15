@@ -170,8 +170,8 @@ void loop() {
       }
     note3=n+scale[index];
 
-    noteOn(0x90, note3, 0x45); delay(duration);
-    noteOn(0x90, note3, 0x00); delay(duration);
+    noteOn(0x92, note3, 0x45); delay(duration);
+    noteOn(0x92, note3, 0x00); delay(duration);
   }
 
   //Fourth sensor
@@ -197,8 +197,8 @@ void loop() {
       }
     note4=n+scale[index];
 
-    noteOn(0x90, note4, 0x45); delay(duration);
-    noteOn(0x90, note4, 0x00); delay(duration);
+    noteOn(0x93, note4, 0x45); delay(duration);
+    noteOn(0x93, note4, 0x00); delay(duration);
   }
 
   //Fifth sensor
@@ -224,8 +224,8 @@ void loop() {
       }
     note5=n+scale[index];
 
-    noteOn(0x90, note5, 0x45); delay(duration);
-    noteOn(0x90, note5, 0x00); delay(duration);
+    noteOn(0x94, note5, 0x45); delay(duration);
+    noteOn(0x94, note5, 0x00); delay(duration);
   }
 
   //To calculate the average of the 5 finger-sensors values, it has to be 1*Sensor1+2*Sensor2+3*Sensor3+4*Sensor4+5*Sensor5 divided by
@@ -233,6 +233,7 @@ void loop() {
   averageValue = ((1*sensor1Value)+(2*sensor2Value)+(3*sensor3Value)+(4*sensor4Value)+(5*sensor5Value))/(15);
   
   //Mapping of the sensors values average 
+  //The map_avgSensors is the pitch.
   int map_avgSensors = map(abs(averageValue), 500,800, 36, 90);
   noteOn(0x95, map_avgSensors, 0x45); delay(duration);
   noteOn(0x95, map_avgSensors, 0x00); delay(duration);
@@ -242,18 +243,9 @@ void loop() {
   //The duration is the times between all the notes
   //0 is the min value for example when you crash the car or there is a flatline. 100 is ms)
   int map_avgDuration = map(abs(averageValue), 500,800, 0, 75);
-  noteOn(0x95, map_avgDuration, 0x45); delay(duration);
-  noteOn(0x95, map_avgDuration, 0x00); delay(duration);
-
-    
-  //Mapping of the sensor values average with the pitch 
-  // map the analog input range (in this case, 400 - 1000 from the photoresistor)
-  // to the output pitch range (120 - 1500Hz)
-  // change the minimum and maximum input numbers below
-  // depending on the range your sensor's giving:
-  int map_avgPitch = map(abs(averageValue), 400, 1000, 120, 1500);
-  noteOn(0x95, map_avgPitch, 0x45); delay(duration);
-  noteOn(0x95, map_avgPitch, 0x00); delay(duration);
+  int duration_time = 75;
+  noteOn(0x96, map_avgSensors, 0x45); delay(map_avgDuration);
+  noteOn(0x96, map_avgSensors, 0x00); delay(duration_time);
 
 }
 
